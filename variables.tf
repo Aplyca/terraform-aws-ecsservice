@@ -107,6 +107,7 @@ variable "discovery" {
     dns_type = "A"
     routing_policy = "MULTIVALUE"     
     healthcheck_failure = 10
+    failure_threshold = 0
   }
 }
 
@@ -157,9 +158,4 @@ variable "ordered_placement_strategies" {
 variable "balancer_deregistration_delay" {
   description = "Target Group Deregistration delay"
   default = 3
-}
-
-variable "service_discovery_failure_threshold" {
-  description = "Service discovery failure threshold"
-  default = 0
 }
