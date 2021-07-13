@@ -15,7 +15,7 @@ resource "aws_service_discovery_service" "this" {
   }
 
   dynamic "health_check_custom_config" {
-    for_each = var.service_discovery_failure_threshold == 0 ? [] : list(var.service_discovery_failure_threshold)
+    for_each = lookup(var.discovery, "failure_threshold", "") == "" ? [] : list(var.discovery.failure_threshold)
     content {
       failure_threshold = health_check_custom_config.value
     }
