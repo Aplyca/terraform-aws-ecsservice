@@ -14,6 +14,13 @@ resource "aws_service_discovery_service" "this" {
     routing_policy = "MULTIVALUE"
   }
 
+  dynamic "health_check_custom_config" {
+    for_each = lookup(var.discovery, "failure_threshold", "") == "" ? [] : list(var.discovery.failure_threshold)
+    content {
+      failure_threshold = health_check_custom_config.value
+    }
+  }  
+  
 }
 
 resource "aws_security_group" "this" {
