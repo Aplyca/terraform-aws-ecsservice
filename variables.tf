@@ -158,3 +158,8 @@ variable "balancer_deregistration_delay" {
   description = "Target Group Deregistration delay"
   default = 3
 }
+
+variable "service_discovery_failure_threshold" {
+  description = "Service discovery failure threshold"
+  default = 0
+}
