@@ -107,7 +107,7 @@ variable "discovery" {
     dns_type = "A"
     routing_policy = "MULTIVALUE"     
     healthcheck_failure = 10
-    failure_threshold = 0
+    failure_threshold = ""
   }
 }
 
