@@ -4,6 +4,7 @@ resource "aws_cloudwatch_event_rule" "this" {
   name        = "${local.id}-${element(var.scheduled_tasks, count.index).name}"
   description = element(var.scheduled_tasks, count.index).description
   schedule_expression = element(var.scheduled_tasks, count.index).schedule
+  is_enabled = element(var.scheduled_tasks, count.index).is_enabled
 }
 
 resource "aws_cloudwatch_event_target" "this" {
