@@ -65,13 +65,7 @@ resource "aws_ecs_task_definition" "this" {
   task_role_arn = aws_iam_role.task.0.arn
   execution_role_arn = aws_iam_role.execution.0.arn
   requires_compatibilities = var.compatibilities
-  dynamic "placement_constraints" {
-    for_each = var.placement_constraints.type != "" ? list(var.placement_constraints) : []
-    content {
-       type       = var.placement_constraints.type
-       expression = var.placement_constraints.expression
-    }
-  }
+
   network_mode = var.network_mode  
   #tags = local.tags    
 }
@@ -85,6 +79,8 @@ resource "aws_ecs_service" "this" {
   launch_type = var.launch_type
   enable_ecs_managed_tags = false
   #iam_role = var.network_mode != "awsvpc" ? data.aws_iam_role.service_ecs.arn : ""
+  deployment_maximum_percent = var.deployment_maximum_percent
+  deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
 
   dynamic "load_balancer" {
     for_each = var.balancer["name"] != "" ? [var.balancer] : [] 
@@ -113,21 +109,20 @@ resource "aws_ecs_service" "this" {
     }  
   }
   
-  # dynamic "ordered_placement_strategy" {
-  #   for_each = var.launch_type != "FARGATE" ? ["ec2"] : [] 
-
-  #   content {
-  #     type  = "spread"
-  #     field = "host"
-  #   }  
-  # }
-
   dynamic "ordered_placement_strategy" {
-    for_each = var.launch_type != "FARGATE" ? var.ordered_placement_strategies : []
+    for_each = var.launch_type != "FARGATE" && var.ordered_placement_strategies != [] ? var.ordered_placement_strategies : []
     
     content {
       field = ordered_placement_strategy.value["field"]
       type = ordered_placement_strategy.value["type"]
+    }
+  }
+
+  dynamic "placement_constraints" {
+    for_each = var.placement_constraints.type != "" ? list(var.placement_constraints) : []
+    content {
+       type       = var.placement_constraints.type
+       expression = var.placement_constraints.expression
     }
   }
 

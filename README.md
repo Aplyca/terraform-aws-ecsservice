@@ -104,3 +104,33 @@ module "my_service" {
   
 }
 ```
+
+Example of One Task Per Host placement strategy and constrains
+```HCL
+module "my_service" {
+  source = "github.com/Aplyca/terraform-aws-ecsservice"
+  
+  # Others settings
+
+  ## One Task Per Host
+
+  placement_constraints = {
+    type  = "distinctInstance"
+    expression = ""
+  }
+
+  ordered_placement_strategies = []
+```
+
+Example of Rolling update deployment options
+```HCL
+module "my_service" {
+  source = "github.com/Aplyca/terraform-aws-ecsservice"
+  
+  # Others settings
+
+  ## Rolling update deployment options
+
+  deployment_maximum_percent = 100
+  deployment_minimum_healthy_percent = 50
+```
