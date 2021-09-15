@@ -159,3 +159,13 @@ variable "balancer_deregistration_delay" {
   description = "Target Group Deregistration delay"
   default = 3
 }
+
+variable "deployment_maximum_percent" {
+  description = "deployment_maximum_percent"
+  default = null
+}
+
+variable "deployment_minimum_healthy_percent" {
+  description = "deployment_minimum_healthy_percent"
+  default = null
+}
