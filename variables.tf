@@ -169,3 +169,13 @@ variable "deployment_minimum_healthy_percent" {
   description = "deployment_minimum_healthy_percent"
   default = null
 }
+
+variable "aws_lb_listener_rule_actions" {
+  description = "aws lb listener rule actions"
+  type = list
+  default = [
+    {
+      type = "forward"
+    }
+  ]
+}
