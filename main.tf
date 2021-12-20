@@ -119,13 +119,13 @@ resource "aws_ecs_service" "this" {
   }
 
   dynamic "placement_constraints" {
-    for_each = var.placement_constraints.type != "" ? list(var.placement_constraints) : []
+    for_each = var.placement_constraints
     content {
-       type       = var.placement_constraints.type
-       expression = var.placement_constraints.expression
+      type = placement_constraints.value.type
+      expression = placement_constraints.value.expression
     }
   }
-
+  
   dynamic "capacity_provider_strategy" { # forces replacement
   for_each = var.capacity_provider_strategies
     content {
