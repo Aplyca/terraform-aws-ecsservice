@@ -85,11 +85,8 @@ variable "subnets" {
 
 variable "placement_constraints" {
   description = "(Optional) A set of rules that are taken during task placement"
-  #type        = "list"
-  default = {
-    type  = ""
-    expression = ""
-  }
+  type        = "list"
+  default = []
 }
 
 variable "parameters" {
